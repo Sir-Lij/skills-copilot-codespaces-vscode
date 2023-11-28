@@ -1,60 +1,40 @@
-// create web server
-// create server
-const express = require('express');
-const app = express();
-// create a route
-app.get('/', (req, res) => {
-    res.send('Hello World');
+// Create web server application with Express
+// Start server: node comments.js
+// Test in browser: http://localhost:3000/comments
+
+// Import modules
+var express = require('express');
+var bodyParser = require('body-parser');
+var app = express();
+
+// Configure body-parser to read request body
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+// Store comments in array
+var comments = [
+  { name: 'John', message: 'Hello' },
+  { name: 'Jane', message: 'Hi' },
+  { name: 'Joe', message: 'Hey' }
+];
+
+// Serve static page
+app.get('/', function(req, res) {
+  res.sendFile(__dirname + '/comments.html');
 });
-// listen on port 3000
-app.listen(3000, () => console.log('Listening on port 3000...'));
-// create a route
-app.get('/api/comments', (req, res) => {
-    // res.send('Hello World');
-    res.send([1, 2, 3]);
+
+// Get comments
+app.get('/comments', function(req, res) {
+  res.json(comments);
 });
-// create a route
-app.get('/api/posts/:year/:month', (req, res) => {
-    // res.send('Hello World');
-    res.send(req.params);
+
+// Add comment
+app.post('/comments', function(req, res) {
+  var comment = req.body;
+  comments.push(comment);
+  res.json(comment);
 });
-// create a route
-app.get('/api/posts/:year/:month', (req, res) => {
-    // res.send('Hello World');
-    res.send(req.query);
-});
-// create a route
-app.get('/api/posts/:year/:month', (req, res) => {
-    // res.send('Hello World');
-    res.send(req.query);
-});
-// create a route
-app.get('/api/posts/:year/:month', (req, res) => {
-    // res.send('Hello World');
-    res.send(req.query);
-});
-// create a route
-app.get('/api/posts/:year/:month', (req, res) => {
-    // res.send('Hello World');
-    res.send(req.query);
-});
-// create a route
-app.get('/api/posts/:year/:month', (req, res) => {
-    // res.send('Hello World');
-    res.send(req.query);
-});
-// create a route
-app.get('/api/posts/:year/:month', (req, res) => {
-    // res.send('Hello World');
-    res.send(req.query);
-});
-// create a route
-app.get('/api/posts/:year/:month', (req, res) => {
-    // res.send('Hello World');
-    res.send(req.query);
-});
-// create a route
-app.get('/api/posts/:year/:month', (req, res) => {
-    // res.send('Hello World');
-    res.send(req.query);
-});
+
+// Start server
+app.listen(3000);
+console.log('Server is running at http://localhost:3000');
